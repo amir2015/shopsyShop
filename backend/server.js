@@ -7,7 +7,7 @@ import productRoutes from "./routes/productRoutes.js";
 import {
   notFound,
   errorHandler,
-} from "../backend/middleWares/errorMiddleware.js";
+} from "../backend/middleWare/errorMiddleware.js";
 connectDB();
 
 const app = express();
