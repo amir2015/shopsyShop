@@ -1,17 +1,21 @@
 import dotenv from "dotenv";
 dotenv.config();
 import express from "express";
+import bodyParser from "body-parser";
 import connectDB from "./config/db.js";
-import products from "./data/products.js";
 import productRoutes from "./routes/productRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
 import {
   notFound,
   errorHandler,
 } from "../backend/middleWare/errorMiddleware.js";
 connectDB();
-
 const app = express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/api/products", productRoutes);
+app.use("/api/users", userRoutes);
+
 app.get("/", (req, res) => {
   res.send("API is running....");
 });
