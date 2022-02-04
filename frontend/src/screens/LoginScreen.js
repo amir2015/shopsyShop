@@ -19,7 +19,7 @@ const LoginScreen = ({}) => {
     if (userInfo) {
       navigate(redirect);
     }
-  }, [userInfo, redirect]);
+  }, [userInfo, navigate, redirect]);
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(login(email, password));
@@ -40,7 +40,7 @@ const LoginScreen = ({}) => {
             onChange={(e) => setEmail(e.target.value)}
           ></Form.Control>
         </Form.Group>
-        <Form.Group controlId="email">
+        <Form.Group controlId="password">
           <Form.Label>Password </Form.Label>
           <Form.Control
             type="password"

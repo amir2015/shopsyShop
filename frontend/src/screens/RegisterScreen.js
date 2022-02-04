@@ -39,12 +39,12 @@ const RegisterScreen = ({}) => {
       {error && <Message>{error}</Message>}
       {loading && <Loader />}
 
-      <h1>Sign In</h1>
+      <h1>Sign Up</h1>
       <Form onSubmit={submitHandler}>
         <Form.Group controlId="name">
           <Form.Label> Name</Form.Label>
           <Form.Control
-            type="name"
+            type="text"
             placeholder="Enter Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
@@ -53,7 +53,7 @@ const RegisterScreen = ({}) => {
         <Form.Group controlId="email">
           <Form.Label>Email Address</Form.Label>
           <Form.Control
-            type="email"
+            type="text"
             placeholder="Enter Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}

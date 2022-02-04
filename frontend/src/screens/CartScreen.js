@@ -1,12 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  Link,
-  useNavigate,
-  useParams,
-  HashRouter,
-  useLocation,
-} from "react-router-dom";
+import { Link, useNavigate, useParams, useLocation } from "react-router-dom";
 import { addToCart, removeFromCart } from "../actions/cartActions";
 
 import {
@@ -17,11 +11,10 @@ import {
   Form,
   Button,
   Card,
-  ListGroupItem,
 } from "react-bootstrap";
 import Message from "../components/Message.js";
 
-const CartScreen = ({}) => {
+const CartScreen = () => {
   const { id } = useParams();
   const productId = id;
   let location = useLocation();
@@ -31,7 +24,6 @@ const CartScreen = ({}) => {
   const { cartItems } = cart;
   let navigate = useNavigate();
 
-  console.log(cartItems);
   useEffect(() => {
     if (productId) {
       dispatch(addToCart(productId, qty));
@@ -41,7 +33,7 @@ const CartScreen = ({}) => {
     dispatch(removeFromCart(id));
   };
   const checkOutHandler = () => {
-    navigate(`/login?redirect=shipping`);
+    navigate("/shipping");
   };
   return (
     <>
