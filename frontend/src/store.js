@@ -12,7 +12,10 @@ import {
   userDetailsReducer,
   userUpdateProfileReducer,
 } from "./reducers/userReducers";
-import { orderCreateReducer } from "./reducers/ordeReducers.js";
+import {
+  orderCreateReducer,
+  orderDetailsReducer,
+} from "./reducers/ordeReducers.js";
 const reducer = combineReducers({
   productList: productListReducer,
   productDetails: productDetailsReducer,
@@ -22,6 +25,7 @@ const reducer = combineReducers({
   userDetails: userDetailsReducer,
   orderCreate: orderCreateReducer,
   userUpdateProfile: userUpdateProfileReducer,
+  orderDetails: orderDetailsReducer,
 });
 //being used later with useSelctor
 
