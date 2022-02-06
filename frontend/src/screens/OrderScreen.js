@@ -68,7 +68,7 @@ const OrderScreen = () => {
         <Col md={8}>
           <ListGroup variant="flush">
             <ListGroup.Item>
-              <h2>Shipping</h2>
+              <h2> Shipping </h2>
               <p>
                 <strong>Client's Name: </strong>
                 {order.user.name}
@@ -92,12 +92,12 @@ const OrderScreen = () => {
               </p>
             </ListGroup.Item>
             <ListGroup.Item>
-              <h2>Payment Method</h2>
-              <p>{order.paymentMethod}</p>
-              {order.ispaid ? (
-                <Message variant="success">Paid on{order.paidAt}</Message>
+              <h2>Payment Method: </h2>
+              <p> {order.paymentMethod}</p>
+              {order.isPaid ? (
+                <Message variant="success">Paid on {order.paidAt}</Message>
               ) : (
-                <Message variant="danger">Not Paid Yet</Message>
+                <Message variant="danger">Not Paid</Message>
               )}
             </ListGroup.Item>
             <ListGroup.Item>

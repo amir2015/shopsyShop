@@ -49,7 +49,7 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
   const order = await Order.findById(req.params.id);
   if (order) {
     order.isPaid = true;
-    orde.paidAt = Date.now();
+    order.paidAt = Date.now();
     order.paymentResult = {
       id: req.body.id,
       status: req.body.status,
@@ -63,4 +63,12 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
     throw new Error("Order not found");
   }
 });
-export { addOrderItems, getOrderById, updateOrderToPaid };
+
+//@desc get user's orders
+//@route Get /api/orders/muorders
+//@access  private
+const getMyOrders = asyncHandler(async (req, res) => {
+  const orders = await Order.find({ user: req.user._id });
+  res.json(orders);
+});
+export { addOrderItems, getOrderById, updateOrderToPaid, getMyOrders };

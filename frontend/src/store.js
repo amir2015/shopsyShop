@@ -15,6 +15,7 @@ import {
 import {
   orderCreateReducer,
   orderDetailsReducer,
+  orderListMyReducer,
   orderPayReducer,
 } from "./reducers/ordeReducers.js";
 const reducer = combineReducers({
@@ -28,6 +29,7 @@ const reducer = combineReducers({
   userUpdateProfile: userUpdateProfileReducer,
   orderDetails: orderDetailsReducer,
   orderPay: orderPayReducer,
+  orderListMy: orderListMyReducer,
 });
 //being used later with useSelctor
 
