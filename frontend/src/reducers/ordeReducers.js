@@ -81,11 +81,11 @@ export const orderPayReducer = (state = {}, action) => {
 export const orderListMyReducer = (state = { orders: [] }, action) => {
   switch (action.type) {
     case ORDER_LIST_MY_REQUEST:
-      return { ...state, loading: true };
+      return { loading: true };
     case ORDER_LIST_MY_SUCCESS:
       return {
         loading: false,
-        order: action.payload,
+        orders: action.payload,
       };
     case ORDER_LIST_MY_FAIL:
       return {
