@@ -15,6 +15,7 @@ import {
 import {
   orderCreateReducer,
   orderDetailsReducer,
+  orderPayReducer,
 } from "./reducers/ordeReducers.js";
 const reducer = combineReducers({
   productList: productListReducer,
@@ -26,6 +27,7 @@ const reducer = combineReducers({
   orderCreate: orderCreateReducer,
   userUpdateProfile: userUpdateProfileReducer,
   orderDetails: orderDetailsReducer,
+  orderPay: orderPayReducer,
 });
 //being used later with useSelctor
 
