@@ -13,6 +13,7 @@ import {
   USER_LIST_REQUEST,
   USER_LIST_SUCCESS,
   USER_LIST_FAIL,
+  USER_LIST_RESET,
 } from "../constants/userConstants";
 import axios from "axios";
 
@@ -145,4 +146,7 @@ export const listUsers = () => async (dispatch, getState) => {
 export const logout = () => (dispatch) => {
   localStorage.removeItem("userInfo");
   dispatch({ type: USER_LOGOUT });
+  // dispatch({ type: USER_DETAILS_RESE });
+  // dispatch({ type: ORDER_LIST_MY_RESET });
+  dispatch({ type: USER_LIST_RESET });
 };
