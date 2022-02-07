@@ -25,7 +25,7 @@ const UserListScreen = () => {
     } else {
       navigate("/login");
     }
-  }, [dispatch, successDelete, navigate]);
+  }, [dispatch, successDelete, navigate, userInfo]);
   const deleteHandler = (id) => {
     if (window.confirm("Are You Sure You Wnat To Delete User?")) {
       dispatch(deleteUser(id));
@@ -65,7 +65,7 @@ const UserListScreen = () => {
                   )}
                 </td>
                 <td>
-                  <LinkContainer to={`/user/${user._id}/edit`}>
+                  <LinkContainer to={`/admin/user/${user._id}/edit`}>
                     <Button variant="light" className="btn-sm">
                       <i className="fas fa-edit"></i>
                     </Button>
