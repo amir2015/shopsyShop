@@ -6,6 +6,8 @@ import {
   productDetailsReducer,
   productCreateReducer,
   productDeleteReducer,
+  productUpdateReducer,
+  productReviewCreateReducer,
 } from "./reducers/productReducers";
 import { cartReducer } from "./reducers/cartReducers";
 import {
@@ -22,6 +24,7 @@ import {
   orderDetailsReducer,
   orderListMyReducer,
   orderPayReducer,
+  orderListReducer,
 } from "./reducers/ordeReducers.js";
 const reducer = combineReducers({
   productList: productListReducer,
@@ -39,7 +42,10 @@ const reducer = combineReducers({
   orderDetails: orderDetailsReducer,
   orderPay: orderPayReducer,
   orderListMy: orderListMyReducer,
+  orderList: orderListReducer,
   productCreate: productCreateReducer,
+  productUpdate: productUpdateReducer,
+  productReviewCreate: productReviewCreateReducer,
 });
 //being used later with useSelctor
 
