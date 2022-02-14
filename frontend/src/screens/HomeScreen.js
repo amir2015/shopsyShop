@@ -3,14 +3,15 @@ import { Row, Col } from "react-bootstrap";
 import Product from "../components/Product";
 import { listProducts } from "../actions/productActions";
 import { useSelector, useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
 const HomeScreen = () => {
   const dispatch = useDispatch();
-  //too select productlist outta state
+  const { keyword } = useParams();
   const productList = useSelector((state) => state.productList);
   const { loading, error, products } = productList;
   useEffect(() => {
-    dispatch(listProducts());
-  }, [dispatch]);
+    dispatch(listProducts(keyword));
+  }, [dispatch, keyword]);
 
   return (
     <>

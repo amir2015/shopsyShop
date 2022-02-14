@@ -13,7 +13,7 @@ import {
 import { PRODUCT_CREATE_RESET } from "../constants/productConstants.js";
 
 const ProductListScreen = () => {
-  // const { id } = useParams();
+  const { id } = useParams();
   const dispatch = useDispatch();
   let navigate = useNavigate();
 
