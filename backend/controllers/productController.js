@@ -2,6 +2,8 @@ import asyncHandler from "express-async-handler";
 import Product from "../models/productModel.js";
 
 const getProducts = asyncHandler(async (req, res) => {
+  const pageSize = 4;
+  const page = Number(req.query.pageNumber);
   const keyword = req.query.keyword
     ? {
         name: {
@@ -10,8 +12,11 @@ const getProducts = asyncHandler(async (req, res) => {
         },
       }
     : {};
-  const products = await Product.find({ ...keyword });
-  res.json(products);
+  const count = await Product.countDocuments({ ...keyword });
+  const products = await Product.find({ ...keyword })
+    .limit(pageSize)
+    .skip(Math.abs(pageSize * (page - 1)));
+  res.json({ products, page, pages: Math.ceil(count / pageSize) });
 });
 const getProductById = asyncHandler(async (req, res) => {
   const product = await Product.findById(req.params.id);
@@ -112,6 +117,13 @@ const createProductReview = asyncHandler(async (req, res) => {
     throw new Error("Product not found");
   }
 });
+//@desc    GET top rated products
+//@route   GET /api/products/top
+//@access  Public/
+const getTopProducts = asyncHandler(async (req, res) => {
+  const products = await Product.find({}).sort({ rating: -1 }).limit(3);
+  res.json(products);
+});
 export {
   getProductById,
   getProducts,
@@ -119,4 +131,5 @@ export {
   createProduct,
   updateProduct,
   createProductReview,
+  getTopProducts,
 };
