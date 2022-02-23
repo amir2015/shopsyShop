@@ -140,6 +140,9 @@ const PlaceOrderScreen = () => {
                 >
                   Place Order
                 </Button>
+                <Link to="/" className="btn btn-light">
+                  Go Back
+                </Link>
               </ListGroup.Item>
             </ListGroup>
           </Card>

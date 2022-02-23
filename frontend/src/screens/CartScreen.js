@@ -40,6 +40,9 @@ const CartScreen = () => {
       <Row>
         <Col md={6}>
           <h1>Your Shoping Cart</h1>
+          <Link to="/" className="btn btn-light">
+            Go Back
+          </Link>
           {cartItems === 0 ? (
             <Message>
               Your Cart Is Empty <Link to="/">Go Back</Link>
@@ -108,7 +111,7 @@ const CartScreen = () => {
                 onClick={checkOutHandler}
               >
                 {" "}
-                Proceed o Checkout
+                Proceed To Checkout
               </Button>
             </ListGroup.Item>
           </Card>

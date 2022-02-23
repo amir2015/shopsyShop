@@ -5,6 +5,8 @@ import { Navbar, Nav, Container } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { logout } from "../actions/userActions.js";
+import { Form, Button, FormControl } from "react-bootstrap";
+
 import SearchBox from "./SearchBox.js";
 const Header = () => {
   const dispatch = useDispatch();
@@ -23,7 +25,7 @@ const Header = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <SearchBox />
-            <Nav className="ml-auto">
+            <Nav className="navCart">
               <LinkContainer to="/cart">
                 <Nav.Link>
                   <i className="fas fa-shopping-cart"></i> Cart

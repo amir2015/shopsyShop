@@ -7,7 +7,7 @@ import Loader from "../components/Loader.js";
 import { getUserDetails, updateUserProfile } from "../actions/userActions";
 import { listMyOrders } from "../actions/orderActions";
 import { LinkContainer } from "react-router-bootstrap";
-
+import { USER_UPDATE_PROFILE_RESET } from "../constants/userConstants.js";
 const ProfileScreen = ({}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -26,11 +26,12 @@ const ProfileScreen = ({}) => {
   const userUpdateProfile = useSelector((state) => state.userUpdateProfile);
   const { success } = userUpdateProfile;
 
-  const orderListMy = useSelector((state) => state.orderListMy);
-  console.log(orderListMy, "test");
-  const { loading: loadingOrders, error: errorOrders, orders } = orderListMy;
   // const orderListMy = useSelector((state) => state.orderListMy);
+  // console.log(orderListMy, "test");
   // const { loading: loadingOrders, error: errorOrders, orders } = orderListMy;
+
+  const orderListMy = useSelector((state) => state.orderListMy);
+  const { loading: loadingOrders, error: errorOrders, orders } = orderListMy;
 
   useEffect(() => {
     if (!userInfo) {
@@ -39,7 +40,6 @@ const ProfileScreen = ({}) => {
       if (!user.name) {
         dispatch(getUserDetails("profile"));
         dispatch(listMyOrders());
-        console.log(orders);
       } else {
         setName(user.name);
         setEmail(user.email);
@@ -76,7 +76,7 @@ const ProfileScreen = ({}) => {
           </Form.Group>
 
           <Form.Group controlId="email">
-            <Form.Label>Email Address</Form.Label>
+            <Form.Label>Email </Form.Label>
             <Form.Control
               type="email"
               placeholder="Enter email"
@@ -86,7 +86,7 @@ const ProfileScreen = ({}) => {
           </Form.Group>
 
           <Form.Group controlId="password">
-            <Form.Label>Password Address</Form.Label>
+            <Form.Label>Password </Form.Label>
             <Form.Control
               type="password"
               placeholder="Enter password"
@@ -123,7 +123,7 @@ const ProfileScreen = ({}) => {
                 <th>ID</th>
                 <th>DATE</th>
                 <th>TOTAL</th>
-                <th>PAID</th>
+                <th>PAID AT</th>
                 <th>DELIVERED</th>
                 <th></th>
               </tr>
@@ -132,7 +132,7 @@ const ProfileScreen = ({}) => {
               {orders?.map((order) => (
                 <tr key={order._id}>
                   <td>{order._id}</td>
-                  {/* <td>{order?.createdAt.substring(0, 10)}</td> */}
+                  <td>{order?.createdAt.substring(0, 10)}</td>
                   <td>{order.totalPrice}</td>
                   <td>
                     {order.isPaid ? (

@@ -3,32 +3,47 @@ import axios from "axios";
 import { Row, Col, ListGroup, Image, Card } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message.js";
-import { Link, useParams } from "react-router-dom";
-import { getOrderDetails, payOrder } from "../actions/orderActions.js";
+import { Button } from "react-bootstrap";
+
+import { Link, useNavigate, useParams } from "react-router-dom";
+import {
+  getOrderDetails,
+  payOrder,
+  deliverOrder,
+} from "../actions/orderActions.js";
 import { PayPalButton } from "react-paypal-button-v2";
 import Loader from "../components/Loader.js";
-import { ORDER_PAY_RESET } from "../constants/orderConstants.js";
+import {
+  ORDER_PAY_RESET,
+  ORDER_DELIVER_RESET,
+} from "../constants/orderConstants.js";
 
 const OrderScreen = () => {
   const { id } = useParams();
-  // const orderId = id;
   const [sdkReady, setSdkReady] = useState(false);
-
   const dispatch = useDispatch();
   const orderDetails = useSelector((state) => state.orderDetails);
   const { order, loading, error } = orderDetails;
   const orderPay = useSelector((state) => state.orderPay);
   const { loading: loadingPay, success: successPay } = orderPay;
+  const orderDeilver = useSelector((state) => state.orderDeilver);
+  const { loading: loadingDeilver, success: successDeilver } =
+    orderDeilver || {};
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+  let navigate = useNavigate();
   if (!loading) {
     const addDecimals = (num) => {
       return (Math.round(num * 100) / 100).toFixed(2);
     };
-
     order.itemsPrice = addDecimals(
       order.orderItems.reduce((acc, item) => acc + item.price * item.qty, 0)
     );
   }
   useEffect(() => {
+    if (!userInfo) {
+      navigate("/login");
+    }
     const addPayPalScript = async () => {
       const { data: clientId } = await axios.get("/api/config/paypal");
       const script = document.createElement("script");
@@ -40,9 +55,10 @@ const OrderScreen = () => {
       };
       document.body.appendChild(script);
     };
-    if (!order || successPay) {
+    if (!order || successPay || successDeilver || order._id !== id) {
       //reset orderpay
       dispatch({ type: ORDER_PAY_RESET });
+      dispatch({ type: ORDER_DELIVER_RESET });
       //reload the order but thisTime paid
       dispatch(getOrderDetails(id));
     } else if (!order.isPaid) {
@@ -52,7 +68,10 @@ const OrderScreen = () => {
         setSdkReady(true);
       }
     }
-  }, [dispatch, id, successPay, order]);
+  }, [dispatch, id, successPay, order, successDeilver, userInfo, navigate]);
+  const deliverHandler = () => {
+    dispatch(deliverOrder(order));
+  };
   const successPaymentHandler = (paymentResult) => {
     dispatch(payOrder(id, paymentResult));
   };
@@ -63,12 +82,12 @@ const OrderScreen = () => {
     <Message variant="danger">{error}</Message>
   ) : (
     <>
-      <h1>Order{order._id}</h1>
+      <h1>Order: {order._id}</h1>
       <Row>
         <Col md={8}>
           <ListGroup variant="flush">
             <ListGroup.Item>
-              <h2> Shipping </h2>
+              <h2> Shipping: </h2>
               <p>
                 <strong>Client's Name: </strong>
                 {order.user.name}
@@ -84,10 +103,13 @@ const OrderScreen = () => {
                 {order.shippingAddress.country}
                 {order.isDelivered ? (
                   <Message variant="success">
-                    Delivered on{order.deliveredAt}
+                    Delivered at{order.deliveredAt}
                   </Message>
                 ) : (
-                  <Message variant="danger">Not Delivered Yet</Message>
+                  <Message variant="danger">
+                    {console.log(order.deliveredAt, "delivered at")} Not
+                    Delivered Yet
+                  </Message>
                 )}
               </p>
             </ListGroup.Item>
@@ -101,7 +123,7 @@ const OrderScreen = () => {
               )}
             </ListGroup.Item>
             <ListGroup.Item>
-              <h2>Order Items</h2>
+              <h2>Order Items: </h2>
               {order.orderItems.length === 0 ? (
                 <Message>Your Order is empty</Message>
               ) : (
@@ -174,6 +196,18 @@ const OrderScreen = () => {
                       onSuccess={successPaymentHandler}
                     />
                   )}
+                </ListGroup.Item>
+              )}
+              {loadingDeilver && <Loader />}
+              {userInfo.isAdmin && order.isPaid && !order.isDelivered && (
+                <ListGroup.Item>
+                  <Button
+                    type="button"
+                    className="btn btn-block"
+                    onClick={deliverHandler}
+                  >
+                    Mark As Delivered
+                  </Button>
                 </ListGroup.Item>
               )}
             </ListGroup>
