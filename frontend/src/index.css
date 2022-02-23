@@ -1,3 +1,25 @@
+main {
+  min-height: 80vh;
+}
+
+h3 {
+  padding: 1rem 0;
+}
+
+h1 {
+  font-size: 1.8rem;
+  padding: 1rem 0;
+}
+
+h2 {
+  font-size: 1.4rem;
+  padding: 0.5rem 0;
+}
+
+.rating span {
+  margin: 0.1rem;
+}
+
 .carousel-item-next,
 .carousel-item-prev,
 .carousel-item.active {
@@ -23,4 +45,15 @@
 }
 .carousel {
   margin-bottom: 10px;
+}
+.searchContainer {
+  display: flex;
+  padding: 05px;
+  justify-content: space-between;
+}
+.p-2 {
+  margin-left: 5px;
+}
+.navCart {
+  margin-left: auto;
 }

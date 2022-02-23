@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import { Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Product from "../components/Product";
+import Meta from "../components/Meta.js";
+
 import { listProducts } from "../actions/productActions";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -20,6 +22,7 @@ const HomeScreen = () => {
 
   return (
     <>
+      <Meta />
       {!keyword ? (
         <ProductCarousel />
       ) : (

@@ -26,6 +26,7 @@ const addOrderItems = asyncHandler(async (req, res) => {
       taxPrice,
       totalPrice,
     });
+    order.createdAt = Date.now();
     const createdOrder = await order.save();
     res.status(201).json(createdOrder);
   }
@@ -79,10 +80,28 @@ const getOrders = asyncHandler(async (req, res) => {
   const orders = await Order.find({}).populate("user", "id name");
   res.json(orders);
 });
+
+//@desc set order to delivered
+//@route Get /api/orders/:id/deliver
+//@access  private
+const updateOrderToDelivered = asyncHandler(async (req, res) => {
+  const order = await Order.findById(req.params.id);
+  if (order) {
+    order.isDelivered = true;
+    order.deliveredAt = Date.now();
+    const updatedOrder = await order.save();
+    res.json(updatedOrder);
+  } else {
+    res.status(404);
+    throw new Error("Order not found");
+  }
+});
+
 export {
   addOrderItems,
   getOrderById,
   updateOrderToPaid,
   getMyOrders,
   getOrders,
+  updateOrderToDelivered,
 };

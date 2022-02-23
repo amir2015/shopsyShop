@@ -54,10 +54,17 @@ const OrderSchema = mongoose.Schema({
   paidAt: {
     type: Date,
   },
-  isDeliverd: {
+
+  createdAt: {
+    type: Date,
+  },
+  isDelivered: {
     type: Boolean,
     required: true,
     default: false,
+  },
+  deliveredAt: {
+    type: Date,
   },
 });
 const Order = mongoose.model("Order", OrderSchema);
