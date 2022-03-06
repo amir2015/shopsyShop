@@ -1,1 +1,0 @@
-mongodb+srv://amir:123@amir.htifs.mongodb.net/shopsy?retryWrites=true&w=majority
