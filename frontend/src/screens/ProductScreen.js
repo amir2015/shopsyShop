@@ -33,8 +33,11 @@ const Productscreen = (props) => {
   const { loading, error, product } = productDetails;
 
   const productReviewCreate = useSelector((state) => state.productReviewCreate);
-  const { success: successProductReview, error: errorProductReview } =
-    productReviewCreate;
+  const {
+    loading: loadingProductReview,
+    success: successProductReview,
+    error: errorProductReview,
+  } = productReviewCreate;
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -43,13 +46,15 @@ const Productscreen = (props) => {
   };
   useEffect(() => {
     if (successProductReview) {
-      alert("Review successfully submitted");
       setRating(0);
       setComment("");
+    }
+    if (!product._id || product._id !== id) {
+      dispatch(listProductDetails(id));
       dispatch({ type: PRODUCT_CREATE_REVIEW_RESET });
     }
     dispatch(listProductDetails(id));
-  }, [dispatch, id, successProductReview]);
+  }, [dispatch, id, successProductReview, product._id]);
   const addTocArtHancler = () => {
     navigate(`/cart/${id}?qty=${qty}`);
   };
@@ -158,6 +163,12 @@ const Productscreen = (props) => {
                 ))}
                 <ListGroup.Item>
                   <h2>Write a Customer Review</h2>
+                  {successProductReview && (
+                    <Message variant="success">
+                      Review submitted successfully
+                    </Message>
+                  )}
+                  {loadingProductReview && <Loader />}
                   {errorProductReview && (
                     <Message variant="danger">{errorProductReview}</Message>
                   )}
@@ -187,7 +198,11 @@ const Productscreen = (props) => {
                           onChange={(e) => setComment(e.target.value)}
                         ></Form.Control>
                       </Form.Group>
-                      <Button type="submit" variant="primary">
+                      <Button
+                        disabled={loadingProductReview}
+                        type="submit"
+                        variant="primary"
+                      >
                         Submit
                       </Button>
                     </Form>

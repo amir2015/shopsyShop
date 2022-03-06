@@ -14,7 +14,6 @@ import {
 import { PRODUCT_CREATE_RESET } from "../constants/productConstants.js";
 
 const ProductListScreen = () => {
-  const { id } = useParams();
   const { pageNumber } = useParams() || 1;
   const dispatch = useDispatch();
   let navigate = useNavigate();
@@ -39,13 +38,11 @@ const ProductListScreen = () => {
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
-  // navigate("/login");
-  // navigate(`/admin/products/${createdProduct._id}/edit`);
 
   useEffect(() => {
     dispatch({ type: PRODUCT_CREATE_RESET });
 
-    if (!userInfo.isAdmin) {
+    if (!userInfo || !userInfo.isAdmin) {
       navigate("/login");
     }
 

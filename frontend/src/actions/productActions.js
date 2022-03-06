@@ -22,9 +22,8 @@ import {
   PRODUCT_TOP_SUCCESS,
   PRODUCT_TOP_FAIL,
 } from "../constants/productConstants";
-//dispatch action to the reducer
 export const listProducts =
-  (keyword = "", pageNumber = "") =>
+  (keyword = "", pageNumber = "1") =>
   async (dispatch) => {
     try {
       dispatch({
@@ -159,6 +158,7 @@ export const updateProduct = (product) => async (dispatch, getState) => {
       type: PRODUCT_UPDATE_SUCCESS,
       payload: data,
     });
+    dispatch({ type: PRODUCT_DETAILS_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
       type: PRODUCT_UPDATE_FAIL,

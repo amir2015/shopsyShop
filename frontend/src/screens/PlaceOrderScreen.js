@@ -5,12 +5,16 @@ import CheckOutSteps from "../components/CheckOutSteps.js";
 import Message from "../components/Message.js";
 import { Link, useNavigate } from "react-router-dom";
 import { createOrder } from "../actions/orderActions.js";
+import { ORDER_CREATE_RESET } from "../constants/orderConstants";
 const PlaceOrderScreen = () => {
   const dispatch = useDispatch();
   let navigate = useNavigate();
-
   const cart = useSelector((state) => state.cart);
-
+  if (!cart.shippingAddress.address) {
+    navigate("/shipping");
+  } else if (!cart.paymentMethod) {
+    navigate("/payment");
+  }
   const addDecimals = (num) => {
     return (Math.round(num * 100) / 100).toFixed(2);
   };
@@ -32,8 +36,9 @@ const PlaceOrderScreen = () => {
   useEffect(() => {
     if (success) {
       navigate(`/order/${order._id}`);
+      dispatch({ type: ORDER_CREATE_RESET });
     }
-  });
+  }, [dispatch, navigate, success]);
 
   const placeOrderHandler = () => {
     dispatch(

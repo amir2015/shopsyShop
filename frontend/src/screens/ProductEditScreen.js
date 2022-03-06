@@ -12,11 +12,11 @@ import { PRODUCT_UPDATE_SUCCESS } from "../constants/productConstants.js";
 const ProductEditScreen = () => {
   const { id } = useParams();
   const [name, setName] = useState("");
-  const [price, setPrice] = useState("");
+  const [price, setPrice] = useState(0);
   const [image, setImage] = useState("");
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
-  const [countInStock, setCountInStock] = useState("");
+  const [countInStock, setCountInStock] = useState(0);
   const [brand, setBrand] = useState("");
   const [uploading, setUploading] = useState(false);
 
@@ -50,7 +50,7 @@ const ProductEditScreen = () => {
         setDescription(product.description);
       }
     }
-  }, [dispatch, id, product, successUpdate]);
+  }, [dispatch, id, product, successUpdate, navigate]);
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(
@@ -80,7 +80,6 @@ const ProductEditScreen = () => {
       setImage(data);
       setUploading(false);
     } catch (error) {
-      console.error(error);
       setUploading(false);
     }
   };
@@ -108,16 +107,17 @@ const ProductEditScreen = () => {
                 onChange={(e) => setName(e.target.value)}
               ></Form.Control>
             </Form.Group>
-
             <Form.Group controlId="price">
               <Form.Label>Price </Form.Label>
               <Form.Control
                 type="number"
+                min="0"
                 placeholder="Enter Price"
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
               ></Form.Control>
             </Form.Group>
+            {/* //image */}
             <Form.Group controlId="image">
               <Form.Label>Image </Form.Label>
               <Form.Control
@@ -126,16 +126,23 @@ const ProductEditScreen = () => {
                 value={image}
                 onChange={(e) => setImage(e.target.value)}
               ></Form.Control>
-              <Form.File
+              <Form.Control
+                type="file"
+                id="image-file"
+                custom
+                onChange={uploadFileHandler}
+              ></Form.Control>
+              {/* <Form.File
                 id="image-file"
                 label="Choose File"
                 custom
                 onChange={uploadFileHandler}
-              ></Form.File>
+              ></Form.File> */}
+
               {uploading && <Loader />}
             </Form.Group>
             <Form.Group controlId="brand">
-              <Form.Label>brand </Form.Label>
+              <Form.Label>Brand </Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Enter brand"
@@ -156,20 +163,21 @@ const ProductEditScreen = () => {
               <Form.Label>Count In Stock </Form.Label>
               <Form.Control
                 type="number"
+                min="0"
                 placeholder="Enter countInStock"
                 value={countInStock}
                 onChange={(e) => setCountInStock(e.target.value)}
               ></Form.Control>
             </Form.Group>
             <Form.Group controlId="description">
-              <Form.Check
+              <Form.Label>Description</Form.Label>
+              <Form.Control
                 type="text"
-                label="description"
-                checked={description}
-                onChange={(e) => setDescription(e.target.checked)}
-              ></Form.Check>
+                placeholder="Enter description"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+              ></Form.Control>
             </Form.Group>
-
             <Button type="submit" variant="primary">
               Update
             </Button>

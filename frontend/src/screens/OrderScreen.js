@@ -106,10 +106,7 @@ const OrderScreen = () => {
                     Delivered at{order.deliveredAt}
                   </Message>
                 ) : (
-                  <Message variant="danger">
-                    {console.log(order.deliveredAt, "delivered at")} Not
-                    Delivered Yet
-                  </Message>
+                  <Message variant="danger">Delivered Yet</Message>
                 )}
               </p>
             </ListGroup.Item>
